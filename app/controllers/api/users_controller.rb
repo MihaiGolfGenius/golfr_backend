@@ -3,7 +3,7 @@ module Api
   class UsersController < ApplicationController
     include Devise::Controllers::Helpers
 
-    def get_user_name
+    def user_name
       id = params[:id]
       user = User.find_by(id: id)
       if user.blank?

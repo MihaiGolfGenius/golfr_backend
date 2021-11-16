@@ -3,10 +3,10 @@ module Api
   class ScoresController < ApplicationController
     before_action :logged_in!
     before_action :validate_score_user_id, only: :destroy
-  
+
     def user_scores
       user = User.find_by(id: params[:user_id])
-  
+
       if user.blank?
         render json: {
           errors: [
@@ -18,11 +18,11 @@ module Api
       # Does not lazy load the :user
       scores = Score.where(user_id: params[:user_id]).includes(:user)
       serialized_scores = scores.map(&:serialize)
-  
+
       response = {
         scores: serialized_scores,
       }
-  
+
       render json: response.to_json
     end
 
