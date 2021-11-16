@@ -3,6 +3,25 @@ module Api
   class UsersController < ApplicationController
     include Devise::Controllers::Helpers
 
+    def user_name
+      id = params[:id]
+      user = User.find_by(id: id)
+      if user.blank?
+        render json: {
+          errors: [
+            'Invalid user id'
+          ]
+        }, status: :bad_request
+        return
+      end
+
+      render json: {
+        id: user.id,
+        email: user.email,
+        name: user.name
+      }
+    end
+
     def login
       user = User.find_by('lower(email) = ?', params[:email])
 
